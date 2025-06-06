@@ -10,7 +10,7 @@ const AVATARS = {
 };
 
 const VAR_URL      = 'https://api.openai.com/v1/images/variations';
-const BACKEND_EDIT = '/api/goofy-edit';
+const BACKEND_EDIT = `${process.env.REACT_APP_API_URL}/api/goofy-edit`;
 const API_KEY      = process.env.REACT_APP_OPENAI_API_KEY;
 
 const PROPS = [
