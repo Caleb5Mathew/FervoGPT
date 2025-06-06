@@ -1,0 +1,138 @@
+/* ─── Global Reset & Box-Sizing ───────────────────────────────── */
+html {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  height: 100%;
+}
+
+/* ─── Include Inter via Google Fonts in index.html ───────────────
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+*/
+
+/* ─── Color Palette ───────────────────────────────────────────── */
+:root {
+  --primary-indigo:  #2F47D6;
+  --deep-indigo:     #111F95;
+  --neon-violet:     #7544FF;
+  --cool-cyan:       #00CFFF;
+  --background-dark: #0B0D1C;
+  --surface-dim:     #1B1E2D;
+  --surface-hover:   #2C2F45;
+  --text-primary:    #FFFFFF;
+  --text-secondary:  #A6ACD3;
+}
+
+/* ─── Layout ──────────────────────────────────────────────────── */
+.login-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 5vw, 2rem);
+  background: radial-gradient(
+    circle at 20% -20%,
+    var(--deep-indigo) 0%,
+    var(--background-dark) 60%
+  ) fixed;
+  font-family: 'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-primary);
+}
+
+/* ─── Header ──────────────────────────────────────────────────── */
+.drilling-header {
+  margin: 0 0 clamp(0.75rem, 3vw, 1rem);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  animation: fadeIn 0.6s ease;
+  animation-delay: 0.1s;
+}
+
+/* ─── Card ────────────────────────────────────────────────────── */
+.login-card {
+  width: clamp(20rem, 90%, 26rem);
+  background: var(--surface-dim);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  animation: fadeIn 0.6s ease;
+  animation-delay: 0.2s;
+}
+
+/* ─── Brand / Heading ─────────────────────────────────────────── */
+.login-logo {
+  height: 3rem;
+  margin-bottom: 2rem;
+}
+.login-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.login-sub {
+  margin-bottom: 2.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ─── Button ──────────────────────────────────────────────────── */
+.login-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: var(--cool-cyan);
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000;
+  cursor: pointer;
+  transition: transform 0.15s ease-out, background 0.25s, box-shadow 0.25s;
+}
+.login-btn:hover,
+.login-btn:focus-visible {
+  background: var(--neon-violet);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.login-btn:active {
+  transform: scale(0.95);
+}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.login-footer {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ─── Subtle fade-in ──────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);      opacity: 1; }
+}
+
+/* ─── Responsive tweaks ───────────────────────────────────────── */
+@media (max-width: 400px) {
+  .login-card { padding: 1.25rem; }
+  .login-title { font-size: 1.5rem; }
+}

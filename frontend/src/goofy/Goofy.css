@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+.goofy-list {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: var(--surface-dim);
+  color: var(--text-primary);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.goofy-list h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.goofy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  justify-items: center;
+}
+
+.goofy-card {
+  background-color: var(--surface-hover);
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 12px;
+  width: 100%;
+  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.goofy-card:hover {
+  background-color: #2C2F45;
+  transform: translateY(-2px);
+}
+
+.goofy-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  border: 2px solid var(--cool-cyan);
+}
+
+.goofy-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  word-wrap: break-word;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .goofy-list {
+    padding: 16px;
+  }
+  .goofy-grid {
+    gap: 12px;
+  }
+  .goofy-card {
+    padding: 10px;
+    max-width: 100px;
+  }
+  .goofy-avatar {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 6px;
+  }
+  .goofy-name {
+    font-size: 12px;
+  }
+}

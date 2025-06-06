@@ -1,0 +1,21 @@
+.logo-spinner-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-spinner {
+  animation: spin 1.25s linear infinite;
+  transform-origin: center;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

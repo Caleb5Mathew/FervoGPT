@@ -1,0 +1,247 @@
+/* ChatInterface.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────────────────
+      1) Ensure the top‐level .workspace has a fixed viewport height
+   ───────────────────────────────────────────────────────────────────────────── */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* fill entire viewport */
+  background-color: var(--surface-dim);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+      2) Chat area: the parent container and scrollable thread
+   ───────────────────────────────────────────────────────────────────────────── */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;          /* grow to fill .workspace */
+  overflow: hidden; /* allow .chat-thread to scroll */
+}
+
+.chat-thread {
+  flex: 1;               /* fill all remaining vertical space */
+  overflow-y: auto;      /* scroll vertically when content overflows */
+  background-color: var(--surface-dim);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.5rem;
+}
+
+/* If you want the bubbles centered in a narrower column: */
+.chat-panel {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+      3) ChatGPT-style scrollbar (minimalist, flush right)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Firefox */
+.chat-thread {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.4) transparent;
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+.chat-thread::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-thread::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-thread::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.chat-thread::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+      4) Individual message styling
+   ───────────────────────────────────────────────────────────────────────────── */
+/* Message row base */
+.message-row {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+/* Align user messages to the right */
+.message-row.user {
+  justify-content: flex-end;
+}
+
+/* Chat bubbles */
+.message-bubble {
+  width: 100%;
+  padding: 10px 26px;
+  font-size: 16px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-bubble.user {
+  max-width: 60%;
+  background-color: var(--cool-cyan);
+  color: var(--background-dark);
+  border-radius: 16px 4px 16px 16px;
+}
+
+.message-bubble.assistant {
+  max-width: 80%;
+  background-color: var(--surface-hover);
+  color: var(--text-primary);
+  border-radius: 4px 16px 16px 16px;
+}
+
+/* Spinner bubble (assistant) */
+.spinner-bubble {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 9999px;
+  padding: 0;
+  background-color: var(--surface-hover);
+  border: 1px solid var(--border-gray);
+}
+
+/* Message input area */
+.message-input-container {
+  flex: none; /* stays at its natural height */
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border-gray);
+  background-color: var(--surface-hover);
+  width: 100%;
+}
+
+.message-input {
+  flex: 1;
+  min-height: 48px;
+  padding: 12px 16px;
+  margin-right: 12px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  resize: none;
+}
+
+.message-input::placeholder {
+  color: var(--input-placeholder);
+}
+
+/* Send Button */
+.send-btn {
+  height: 48px;
+  padding: 0 20px;
+  background-color: var(--send-btn-bg);
+  color: var(--send-btn-text);
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.send-btn:hover {
+  background-color: var(--neon-violet);
+  transform: scale(1.03);
+  box-shadow: 0 0 6px var(--neon-violet);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+      5) Basic styling for Markdown-generated elements inside .message-bubble
+   ───────────────────────────────────────────────────────────────────────────── */
+.message-bubble h1,
+.message-bubble h2,
+.message-bubble h3,
+.message-bubble h4,
+.message-bubble h5,
+.message-bubble h6 {
+  margin: 1em 0 0.5em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.message-bubble p {
+  margin: 0.5em 0;
+  line-height: 1.5;
+}
+
+.message-bubble hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 1.5em 0;
+}
+
+.message-bubble ul,
+.message-bubble ol {
+  margin: 0.5em 0 0.5em 1.25em;
+  padding: 0;
+}
+
+.message-bubble ul li,
+.message-bubble ol li {
+  margin: 0.25em 0;
+}
+
+.message-bubble strong {
+  font-weight: 600;
+}
+
+.message-bubble em {
+  font-style: italic;
+}
+
+.message-bubble code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.message-bubble pre {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.75em 0;
+}
+
+.message-bubble blockquote {
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  padding-left: 1em;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.5em 0;
+}
+
+/* Responsive: narrower bubbles on small screens */
+@media (max-width: 768px) {
+  .message-bubble.user,
+  .message-bubble.assistant {
+    max-width: 90%;
+  }
+}

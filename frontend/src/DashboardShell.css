@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ─────────────────────────────────────────────────────────
+   Root theme variables (used + overridden dynamically)
+───────────────────────────────────────────────────────── */
+:root,
+[data-theme] {
+  --primary-indigo: #2F47D6;
+  --deep-indigo: #111F95;
+  --neon-violet: #7544FF;
+  --cool-cyan: #ffffff;
+  --background-dark: #0B0D1C;
+  --surface-dim: #1B1E2D;
+  --surface-hover: #2C2F45;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A6ACD3;
+  --border-gray: #3F4460;
+  --danger-red: #E53E3E;
+
+  transition: all 0.25s ease-in-out;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Optional: default light mode support
+───────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-dark: #ffffff;
+    --surface-dim: #f8f9fa;
+    --surface-hover: #e9ecef;
+    --text-primary: #111111;
+    --text-secondary: #4B5563;
+    --border-gray: #d1d5db;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+   Box-sizing for consistent layout
+───────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Base layout
+───────────────────────────────────────────────────────── */
+html, body, #root, .dashboard-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, .dashboard-container {
+  display: flex;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Mobile sidebar overlay
+───────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 15;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.overlay.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Sidebar layout
+───────────────────────────────────────────────────────── */
+.sidebar {
+  width: 240px;
+  background-color: var(--surface-dim);
+  border-right: 1px solid var(--border-gray);
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  position: relative;
+  z-index: 20;
+}
+.sidebar-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-gray);
+}
+.sidebar-close {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.sidebar-close:hover {
+  color: var(--text-primary);
+}
+.sidebar-header {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar .nav-item {
+  padding: 12px 24px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.sidebar .nav-item.active,
+.sidebar .nav-item:hover {
+  background-color: var(--send-btn-bg); /* instead of hardcoded #24324a */
+  color: var(--text-primary);
+  border-left: 4px solid var(--cool-cyan);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Main content
+───────────────────────────────────────────────────────── */
+.main-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Workspace (chat, history, goofy, etc.) 
+   – this fills all space beneath the TopBar
+───────────────────────────────────────────────────────── */
+/* DashboardShell.css */
+.workspace {
+  flex: 1;                 /* Fill whatever space is left under the TopBar */
+  display: flex;
+  flex-direction: column;
+  /* Optional: if your TopBar is 60px tall, you could also do height: calc(100vh - 60px) */
+  overflow: hidden;        /* so children (.chat-thread) can scroll inside */
+  background-color: var(--surface-dim);
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   Top bar
+───────────────────────────────────────────────────────── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: var(--surface-dim);
+  border-bottom: 1px solid var(--border-gray);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.top-bar .menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--text-secondary);
+  margin-right: 12px;
+  cursor: pointer;
+}
+.search-input {
+  flex: 1;
+  max-width: 400px;
+  height: 48px;
+  padding: 0 16px;
+  margin-right: 12px;
+  background-color: var(--surface-hover);
+  border: none;
+  border-radius: 24px;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+.search-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+.new-chat-btn {
+  height: 40px;
+  padding: 0 20px;
+  margin-right: 12px;
+  background-color: var(--send-btn-bg);
+  color: var(--cool-cyan); /* matches Send button color */
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.new-chat-btn:hover {
+  background-color: var(--neon-violet);
+  box-shadow: 0 0 8px var(--neon-violet);
+  transform: scale(1.03);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Account menu
+───────────────────────────────────────────────────────── */
+.account-menu {
+  margin-left: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.account-menu:hover {
+  background-color: var(--surface-hover);
+}
+.account-menu .profile-icon {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--text-secondary);
+  margin-right: 8px;
+}
+.account-menu .username {
+  margin-right: 4px;
+  font-size: 14px;
+}
+.account-menu .caret {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.account-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background-color: var(--surface-dim);
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 160px;
+  z-index: 10;
+  display: none;
+}
+.account-menu.open .account-dropdown {
+  display: block;
+}
+.account-dropdown .item {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.account-dropdown .item.sign-out {
+  color: var(--danger-red);
+}
+.account-dropdown .item:hover {
+  background-color: var(--surface-hover);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Responsive breakpoints
+───────────────────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .top-bar .menu-btn { display: block; }
+  .account-menu .username { display: none; }
+  .account-menu .profile-icon { display: block; }
+  .sidebar-close { display: block; }
+}
+@media (max-width: 600px) {
+  .sidebar { 
+    left: -240px; 
+    position: fixed; 
+    top: 0; 
+    bottom: 0; 
+  }
+  .sidebar.mobile-open { left: 0; }
+  .overlay.visible { visibility: visible; opacity: 1; }
+  .top-bar { padding: 12px; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   Hide footer
+───────────────────────────────────────────────────────── */
+.footer {
+  display: none;
+}
