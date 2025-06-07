@@ -1,18 +1,12 @@
 // src/index.js
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import { PublicClientApplication } from "@azure/msal-browser";
-import {
-  MsalProvider,
-  MsalRedirectComponent              // ⭐ NEW
-} from "@azure/msal-react";
-
+import { MsalProvider } from "@azure/msal-react";
 import App from "./App";
 import { msalConfig } from "./Authentication/authConfig";
 
-/* ─── simple error boundary ───────────────────────────── */
+// Error boundary to catch any render errors
 class ErrorBoundary extends React.Component {
   state = { error: null };
   static getDerivedStateFromError(error) {
@@ -32,24 +26,17 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-/* ─── MSAL instance ───────────────────────────────────── */
+console.log("🔍 index.js loaded");
+
+// Initialize MSAL
 const msalInstance = new PublicClientApplication(msalConfig);
 
-/* ─── React 18 root ───────────────────────────────────── */
+// Create and mount the React 18 root
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ErrorBoundary>
     <MsalProvider instance={msalInstance}>
-      {/*  BrowserRouter is required so /auth can render */}
-      <BrowserRouter>
-        <Routes>
-          {/*  your main app */}
-          <Route path="/*" element={<App />} />
-
-          {/*  this exact path must match redirectUri */}
-          <Route path="/auth" element={<MsalRedirectComponent />} />
-        </Routes>
-      </BrowserRouter>
+      <App />
     </MsalProvider>
   </ErrorBoundary>
 );
